@@ -130,7 +130,21 @@
         }, 3000);
     }
 
-    function noClicked() {
+        function noClicked() {
+        // SEND EMAIL TO YOU 💌
+        fetch("https://formspree.io/f/xkovnlry", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: "Asthande clicked NO 💖",
+                answer: "NO",
+                date: new Date().toLocaleString()
+            })
+        });
+
+    
         // SAD EMOJI ANIMATION
         for (let i = 0; i < 25; i++) {
             setTimeout(createSadEmoji, i * 120);
@@ -145,7 +159,7 @@
                 </div>
             `;
         }, 3000);
-    }
+}
 
     function createHeart() {
         const heart = document.createElement("div");
@@ -173,4 +187,5 @@
 </body>
 
 </html>
+
 
