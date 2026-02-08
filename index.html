@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>💖</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 420px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .yes {
+            background-color: #ff4d6d;
+            color: white;
+        }
+
+        .no {
+            background-color: #ddd;
+            color: #333;
+        }
+
+        .emoji {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .message {
+            font-size: 18px;
+            color: #333;
+        }
+
+        /* Floating hearts */
+        .heart {
+            position: absolute;
+            bottom: -20px;
+            font-size: 24px;
+            animation: floatUp 4s linear forwards;
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card" id="card">
+    <h1>Asthande 💕<br>Will you be my Valentine?</h1>
+
+    <div class="buttons">
+        <button class="yes" onclick="yesClicked()">YES</button>
+        <button class="no" onclick="noClicked()">NO</button>
+    </div>
+</div>
+
+<script>
+    function yesClicked() {
+        // SEND EMAIL TO YOU 💌
+        fetch("https://formspree.io/f/xkovnlry", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: "Asthande clicked YES 💖",
+                answer: "YES",
+                date: new Date().toLocaleString()
+            })
+        });
+
+        // HEARTS ANIMATION
+        for (let i = 0; i < 30; i++) {
+            setTimeout(createHeart, i * 100);
+        }
+
+        // SHOW MESSAGE AFTER HEARTS
+        setTimeout(() => {
+            document.getElementById("card").innerHTML = `
+                <div class="emoji">😍😍</div>
+                <div class="message">
+                    I'm sorry I can't be with you on the 14th of Feb,<br>
+                    but I hope we can celebrate it when I return ❤️
+                </div>
+            `;
+        }, 3000);
+    }
+
+    function noClicked() {
+        // SAD EMOJI ANIMATION
+        for (let i = 0; i < 25; i++) {
+            setTimeout(createSadEmoji, i * 120);
+        }
+
+        // SHOW SAD MESSAGE AFTER EMOJIS
+        setTimeout(() => {
+            document.getElementById("card").innerHTML = `
+                <div class="emoji">😔💔</div>
+                <div class="message">
+                    It's okay… thank you for being honest 🤍
+                </div>
+            `;
+        }, 3000);
+    }
+
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 20 + 20 + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 4000);
+    }
+
+    function createSadEmoji() {
+        const sad = document.createElement("div");
+        sad.className = "heart"; // reuse same animation
+        sad.innerHTML = Math.random() > 0.5 ? "😔" : "💔";
+        sad.style.left = Math.random() * 100 + "vw";
+        sad.style.fontSize = Math.random() * 20 + 20 + "px";
+        document.body.appendChild(sad);
+
+        setTimeout(() => sad.remove(), 4000);
+    }
+</script>
+
+</body>
+</html>
